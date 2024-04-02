@@ -27,9 +27,9 @@ class alquran_kareem extends StatelessWidget {
                   whiteTextStyle.copyWith(fontSize: 12, fontWeight: bold))),
       // Routes sebagai jalur navigator halaman
       routes: {
-        '/': (context) => const SplahPage(),
-        '/home': (context) => const homePage(),
-        '/detail': (context) => const detailPage()
+        '/': (context) => const SplashPage(),
+        '/home': (context) => const HomePage(),
+        '/detail': (context) => const DetailPage()
       },
     );
   }
