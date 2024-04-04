@@ -1,30 +1,39 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'dart:convert';
+import 'package:alquran_kareem/data/model/surah.dart';
+import 'package:alquran_kareem/data/model/detail_surah.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:alquran_kareem/main.dart';
 
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const alquran_kareem());
+void main() async {
+  Uri url = Uri.parse('https://api.quran.gading.dev/surah');
+  var res = await http.get(url);
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  List data = (json.decode(res.body) as Map<String, dynamic>)["data"];
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  // 1 - 114 -> index ke 113 = anas
+  print(data[113]['number']);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+  //data dari API ( raw data ) -> Model ( yg sudah disimpan )
+  Surah surahAnnas = Surah.fromJson(data[113]);
+
+  // print(surahAnnas.toJson());
+
+  Uri urlAnnas =
+      Uri.parse('https://api.quran.gading.dev/surah/${surahAnnas.number}');
+  var resAnnas = await http.get(urlAnnas);
+
+  Map<String, dynamic> dataAnnas =
+      (jsonDecode(resAnnas.body) as Map<String, dynamic>)['data'];
+
+  //data dari api ( raw data ) -> model (yang sudah disiapin)
+  DetailSurah annas = DetailSurah.fromJson(dataAnnas);
+
+  print(annas.verses![0].text.arab);
+
+  // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  //   // Build our app and trigger a frame.
+  //   await tester.pumpWidget(const alquran_kareem());
+  // });
 }
