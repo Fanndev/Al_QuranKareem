@@ -1,33 +1,21 @@
-import 'dart:async';
-import 'package:alquran_kareem/theme/theme_color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:alquran_kareem/theme/theme_color.dart';
 import 'package:alquran_kareem/theme/icons.dart';
+import 'package:alquran_kareem/routes/view-routes.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
-}
-
-class _SplashPageState extends State<SplashPage> {
-  @override
-  void initState() {
-    super.initState();
-    Timer(
+  Widget build(BuildContext context) {
+    Future.delayed(
       const Duration(seconds: 4),
       () {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          '/home',
-          (route) => false,
-        );
+        Get.offNamed(Routes.home);
       },
     );
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: lighBackgroundColor,
       body: Center(
@@ -37,7 +25,7 @@ class _SplashPageState extends State<SplashPage> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(splashload),
-              fit: BoxFit.cover, // Mengisi seluruh ruang yang tersedia
+              fit: BoxFit.cover,
             ),
           ),
         ),
