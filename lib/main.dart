@@ -1,9 +1,13 @@
-import 'package:alquran_kareem/screens/alquran/detail_page.dart';
-import 'package:alquran_kareem/screens/alquran/home_page.dart';
-import 'package:alquran_kareem/screens/splash_page.dart';
+import 'package:alquran_kareem/home/screens/alquran/detail_page.dart';
+import 'package:alquran_kareem/home/screens/alquran/home_page.dart';
+import 'package:alquran_kareem/home/screens/splash_page.dart';
 import 'package:alquran_kareem/theme/fonts.dart';
 import 'package:alquran_kareem/theme/theme_color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:alquran_kareem/home/bindings/home_bindings.dart';
+import 'package:alquran_kareem/home/bindings/detail_bindings.dart';
+import 'package:alquran_kareem/routes/view-routes.dart';
 
 void main() {
   runApp(alquran_kareem());
@@ -14,7 +18,7 @@ class alquran_kareem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: true,
       title: 'Al-Quran APP',
       theme: ThemeData(
@@ -25,12 +29,9 @@ class alquran_kareem extends StatelessWidget {
               centerTitle: true,
               titleTextStyle:
                   whiteTextStyle.copyWith(fontSize: 12, fontWeight: bold))),
-      // Routes sebagai jalur navigator halaman
-      routes: {
-        '/': (context) => const SplashPage(),
-        '/home': (context) => const HomePage(),
-        '/detail': (context) => const DetailPage()
-      },
+      initialRoute: Routes.splash,
+      initialBinding: HomeBinding(),
+      getPages: AppPages.pages,
     );
   }
 }

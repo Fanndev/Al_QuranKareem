@@ -9,12 +9,12 @@ Surah surahFromJson(String str) => Surah.fromJson(json.decode(str));
 String surahToJson(Surah data) => json.encode(data.toJson());
 
 class Surah {
-  int number;
-  int sequence;
-  int numberOfVerses;
-  Name name;
-  Revelation revelation;
-  Tafsir tafsir;
+  int? number;
+  int? sequence;
+  int? numberOfVerses;
+  Name? name;
+  Revelation? revelation;
+  Tafsir? tafsir;
 
   Surah({
     required this.number,
@@ -38,9 +38,9 @@ class Surah {
         "number": number,
         "sequence": sequence,
         "numberOfVerses": numberOfVerses,
-        "name": name.toJson(),
-        "revelation": revelation.toJson(),
-        "tafsir": tafsir.toJson(),
+        "name": name?.toJson(),
+        "revelation": revelation?.toJson(),
+        "tafsir": tafsir?.toJson(),
       };
 }
 
