@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alquran_kareem/home/controllers/detail_controller.dart';
 

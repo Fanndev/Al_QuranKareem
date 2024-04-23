@@ -1,12 +1,7 @@
-import 'package:alquran_kareem/home/screens/alquran/detail_page.dart';
-import 'package:alquran_kareem/home/screens/alquran/home_page.dart';
-import 'package:alquran_kareem/home/screens/splash_page.dart';
-import 'package:alquran_kareem/theme/fonts.dart';
 import 'package:alquran_kareem/theme/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:alquran_kareem/home/bindings/home_bindings.dart';
-import 'package:alquran_kareem/home/bindings/detail_bindings.dart';
 import 'package:alquran_kareem/routes/view-routes.dart';
 
 void main() {
@@ -19,17 +14,11 @@ class alquran_kareem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       title: 'Al-Quran APP',
-      theme: ThemeData(
-          scaffoldBackgroundColor: lighBackgroundColor,
-          appBarTheme: AppBarTheme(
-              backgroundColor: kPrimaryColor,
-              elevation: 0,
-              centerTitle: true,
-              titleTextStyle:
-                  whiteTextStyle.copyWith(fontSize: 12, fontWeight: bold))),
-      initialRoute: Routes.splash,
+      theme: themeLight,
+      darkTheme: themeDark,
+      initialRoute: Routes.home,
       initialBinding: HomeBinding(),
       getPages: AppPages.pages,
     );
