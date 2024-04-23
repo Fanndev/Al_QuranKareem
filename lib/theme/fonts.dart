@@ -1,20 +1,21 @@
+import 'package:alquran_kareem/theme/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Color whiteColor = const Color(0xffFFFFFF);
-Color greyCharchoel = const Color(0xff5D5D5D);
-Color blackCharchoel = const Color(0xff323232);
-
 TextStyle blackTextStyle = GoogleFonts.poppins(
-  color: blackCharchoel,
+  color: appblackCharchoel,
 );
 
 TextStyle greyTextStyle = GoogleFonts.poppins(
-  color: greyCharchoel,
+  color: appGrey,
 );
 
 TextStyle whiteTextStyle = GoogleFonts.poppins(
-  color: whiteColor,
+  color: appWhite,
+);
+
+TextStyle blueTextStyle = GoogleFonts.poppins(
+  color: appBlue,
 );
 
 FontWeight light = FontWeight.w300;

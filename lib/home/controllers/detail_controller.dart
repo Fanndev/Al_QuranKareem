@@ -1,19 +1,16 @@
-import 'package:alquran_kareem/data/model/surah.dart';
+import 'package:alquran_kareem/data/model/detail_surah.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class DetailController extends GetxController {
-  Future<List<Surah>> getAllSurah() async {
-    Uri url = Uri.parse('https://api.quran.gading.dev/surah');
+  Future<DetailSurah> getDetailSurah(String id) async {
+    Uri url = Uri.parse('https://api.quran.gading.dev/surah/$id');
     var res = await http.get(url);
 
-    List? data = (json.decode(res.body) as Map<String, dynamic>)["data"];
+    Map<String,dynamic> data = (json.decode(res.body) as Map<String, dynamic>)["data"];
+    // print(data);
 
-    if (data == null || data.isEmpty) {
-      return [];
-    } else {
-      return data.map((e) => Surah.fromJson(e)).toList();
-    }
+    return DetailSurah.fromJson(data);
   }
 }

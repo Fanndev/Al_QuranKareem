@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
+
+  RxBool isDarkMode = false.obs; // Gunakan observable untuk memperbarui tampilan
   Future<List<Surah>> getAllSurah() async {
     Uri url = Uri.parse('https://api.quran.gading.dev/surah');
     var res = await http.get(url);
