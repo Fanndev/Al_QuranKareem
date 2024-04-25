@@ -1,3 +1,4 @@
+import 'package:alquran_kareem/data/model/juz.dart' as juz;
 import 'package:alquran_kareem/data/model/surah.dart';
 import 'package:alquran_kareem/theme/fonts.dart';
 import 'package:alquran_kareem/theme/icons.dart';
@@ -293,7 +294,7 @@ class HomePage extends GetView<HomeController> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: AssetImage(
-                                            bingkai,
+                                            bingkaiputih,
                                           ),
                                         ),
                                       ),
@@ -334,60 +335,100 @@ class HomePage extends GetView<HomeController> {
                         );
                       },
                     ),
-                    // Page Juz
-                    ListView.builder(
-                      itemCount: 30,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10), // Atur jarak antara setiap item
-                          child: Obx(
-                            () => Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                gradient: LinearGradient(
-                                  colors: controller.isDarkMode.isTrue
-                                      ? [appBluedarkmode, appBluemode]
-                                      : [
-                                          appBlue,
-                                          appBlueLight,
-                                        ], // Atur warur warna gradient
-                                ),
-                              ),
-                              child: ListTile(
-                                onTap: () {
-                                  //
-                                },
-                                leading: Container(
-                                  height: 35,
-                                  width: 35,
+                    // page 2 Juz
+                    FutureBuilder<List<juz.Juz>>(
+                      future: controller.getAllJuz(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: Text("Tidak ada data"),
+                          );
+                        }
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            juz.Juz detailJuz = snapshot.data![index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical:
+                                      10), // Atur jarak antara setiap item
+                              child: Obx(
+                                () => Container(
                                   decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        bingkai,
-                                      ),
+                                    borderRadius: BorderRadius.circular(20),
+                                    gradient: LinearGradient(
+                                      colors: controller.isDarkMode.isTrue
+                                          ? [appBluedarkmode, appBluemode]
+                                          : [
+                                              appBlue,
+                                              appBlueLight,
+                                            ], // Atur warur warna gradient
                                     ),
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      "${index + 1}",
+                                  child: ListTile(
+                                    onTap: () {
+                                      Get.toNamed(Routes.detailjuz,
+                                          arguments: detailJuz);
+                                    },
+                                    leading: Container(
+                                      height: 35,
+                                      width: 35,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            bingkaiputih,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "${index + 1}",
+                                          style: whiteTextStyle.copyWith(
+                                            fontSize: 12,
+                                            fontWeight: medium,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    title: Text(
+                                      "Juz ${index + 1}",
                                       style: whiteTextStyle.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: medium,
-                                      ),
+                                        fontWeight: bold,
+                                        fontSize: 15,
+                                      ), // Warna teks putih
+                                    ),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "${detailJuz.juzStartInfo} sampai ${detailJuz.juzEndInfo}",
+                                          style: whiteTextStyle.copyWith(
+                                            fontWeight: semibold,
+                                            fontSize: 10,
+                                          ), // Warna teks putih
+                                        ),
+                                        // Text(
+                                        //   "${detailJuz.juzEndInfo}",
+                                        //   style: whiteTextStyle.copyWith(
+                                        //     fontWeight: semibold,
+                                        //     fontSize: 10,
+                                        //   ), // Warna teks putih
+                                        // ),
+                                      ],
                                     ),
                                   ),
-                                ),
-                                title: Text(
-                                  "Juz ${index + 1}",
-                                  style: whiteTextStyle.copyWith(
-                                    fontWeight: bold,
-                                    fontSize: 15,
-                                  ), // Warna teks putih
                                 ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         );
                       },
                     ),

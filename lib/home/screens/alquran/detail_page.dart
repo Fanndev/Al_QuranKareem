@@ -1,6 +1,7 @@
 import 'package:alquran_kareem/data/model/detail_surah.dart' as detail;
 import 'package:alquran_kareem/data/model/surah.dart';
 import 'package:alquran_kareem/theme/fonts.dart';
+import 'package:alquran_kareem/theme/icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -43,27 +44,46 @@ class DetailPage extends GetView<DetailController> {
                     ),
                   ),
                 )),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Text(
-                      'SURAH ${surah.name?.transliteration?.id?.toUpperCase() ?? 'Error..'}',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      '(${surah.name?.translation?.id?.toUpperCase() ?? 'Error..'})',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      '${surah.numberOfVerses ?? 'Error..'} Ayat | ${surah.revelation?.id}',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    colors: Get.isDarkMode
+                        ? [appBluedarkmode, appBluemode]
+                        : [appBlue, appBlueLight],
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Text(
+                        'SURAH ${surah.name?.transliteration?.id?.toUpperCase() ?? 'Error..'}',
+                        style: TextStyle(
+                            color: appWhite,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        '(${surah.name?.translation?.id?.toUpperCase() ?? 'Error..'})',
+                        style: TextStyle(
+                            color: appWhite,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '${surah.numberOfVerses ?? 'Error..'} Ayat | ${surah.revelation?.id}',
+                        style: TextStyle(
+                          color: appWhite,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -89,7 +109,12 @@ class DetailPage extends GetView<DetailController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Card(
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: controller.isDarkMode.isTrue
+                                    ? appWhite
+                                    : appBlue.withOpacity(0.10)),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 10),
@@ -97,8 +122,21 @@ class DetailPage extends GetView<DetailController> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CircleAvatar(
-                                    child: Text('${1 + index}'),
+                                  Obx(
+                                    () => Container(
+                                      height: 35,
+                                      width: 35,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                controller.isDarkMode.isTrue
+                                                    ? bingkaiputih
+                                                    : bingkaihitam),
+                                            fit: BoxFit.contain),
+                                      ),
+                                      child:
+                                          Center(child: Text('${index + 1}')),
+                                    ),
                                   ),
                                   Row(
                                     children: [
@@ -122,10 +160,10 @@ class DetailPage extends GetView<DetailController> {
                             textAlign: TextAlign.end,
                             style: TextStyle(fontSize: 25),
                           ),
-                          SizedBox(height: 20),
+                          SizedBox(height: 30),
                           Text(
                             "${ayat?.translation?.id}",
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.start,
                             style: TextStyle(fontSize: 25),
                           ),
                           SizedBox(height: 50)
