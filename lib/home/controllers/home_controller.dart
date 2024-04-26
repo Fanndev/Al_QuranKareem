@@ -1,10 +1,27 @@
 import 'package:alquran_kareem/data/model/juz.dart';
 import 'package:alquran_kareem/data/model/surah.dart';
+import 'package:alquran_kareem/theme/theme_color.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
+
+  void changeThemeMode() async {
+    Get.isDarkMode ? Get.changeTheme(themeLight) : Get.changeTheme(themeDark);
+    isDarkMode.toggle();
+
+    final box = GetStorage();
+
+    if (Get.isDarkMode) {
+      box.remove('themeDark');
+    } else {
+    box.write('themeDark', true);
+    }
+
+  }
+
   List<Surah> allSurah = [];
   RxBool isDarkMode =
       false.obs; // Gunakan observable untuk memperbarui tampilan

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:alquran_kareem/theme/theme_color.dart';
 
 import 'package:alquran_kareem/home/controllers/detail_controller.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
 class DetailPage extends GetView<DetailController> {
   const DetailPage({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class DetailPage extends GetView<DetailController> {
 
     return Scaffold(
       appBar: AppBar(
+        actionsIconTheme: const IconThemeData(color: appWhite),
         title: Text(
           'SURAH ${surah.name?.transliteration?.id?.toUpperCase() ?? 'Error..'}',
           style: whiteTextStyle.copyWith(fontSize: 16, fontWeight: bold),
@@ -138,17 +140,59 @@ class DetailPage extends GetView<DetailController> {
                                           Center(child: Text('${index + 1}')),
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.bookmark_add_outlined),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.play_arrow),
-                                      ),
-                                    ],
+                                  Obx(
+                                    () => Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon:
+                                              Icon(Icons.bookmark_add_outlined),
+                                        ),
+                                        // kondisi ketika => stop => button play
+                                        // kondisi ketika => play => button pause & button stop
+                                        // kondisi ketika => pause => button resume & button stop
+                                        (controller.kondisiAudio.value ==
+                                                'stop')
+                                            ? IconButton(
+                                                onPressed: () {
+                                                  controller.playAudio(
+                                                      ayat?.audio?.primary);
+                                                },
+                                                icon: Icon(Icons.play_arrow),
+                                              )
+                                            : Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  (controller.kondisiAudio
+                                                              .value ==
+                                                          'playing')
+                                                      ? IconButton(
+                                                          onPressed: () {
+                                                            // controller.playAudio(ayat?.audio?.primary);
+                                                            controller
+                                                                .pauseAudio();
+                                                          },
+                                                          icon:
+                                                              Icon(Icons.pause),
+                                                        )
+                                                      : IconButton(
+                                                          onPressed: () {
+                                                            controller
+                                                                .resumeAudio();
+                                                          },
+                                                          icon: Icon(
+                                                              Icons.play_arrow),
+                                                        ),
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      controller.stopAudio();
+                                                    },
+                                                    icon: Icon(Icons.stop),
+                                                  )
+                                                ],
+                                              ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

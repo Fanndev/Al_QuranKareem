@@ -34,7 +34,7 @@ class HomePage extends GetView<HomeController> {
               Get.isDarkMode
                   ? Get.changeTheme(themeLight)
                   : Get.changeTheme(themeDark);
-              controller.isDarkMode.toggle();
+              controller.changeThemeMode();
             },
           ),
         ],
